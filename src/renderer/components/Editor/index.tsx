@@ -2,7 +2,8 @@
 import React, { useState } from 'react';
 import MDEditor from "@uiw/react-md-editor";
 import styled from '@xstyled/styled-components';
-
+import Yamde from "yamde";
+import { exampleContent } from './exampleContent';
 const mkdStr = `# Markdown Editor for [React](https://facebook.github.io/react/)
 
 **Hello world!!!**
@@ -28,25 +29,47 @@ export default function App() {
 }
 \`\`\`
 `;
-
+import MarkdownPreview from '@uiw/react-markdown-preview';
 const Box = styled.divBox`
   width:100%;
   height: 100%;
-  .container{
-    width:100%;
-    height: 100%;
-
+  .yamde-0-2-1{
+    height: 100%
   }
+  .contentArea-0-2-8 {
+  height: 100%!important;
+}
+
+  textarea, .preview-0-2-9 {
+    width:100%!important;
+    overflow: scroll!important;
+  }
+
+
+
 `;
 
 export default function Editor() {
 
   const [value, setValue] = useState(mkdStr);
+
+  const [isLightMode, setIsLightMode] = useState(true);
+  const [text, setText] = useState(exampleContent);
+
+
   return (
+    // <Box>
+    //   <div className="container">
+    //     <MDEditor height={200} value={value} onChange={setValue} />
+    //   </div>
+    // </Box>
     <Box>
-      <div className="container">
-        <MDEditor height={200} value={value} onChange={setValue} />
-      </div>
+      <Yamde
+          value={text}
+          handler={setText}
+          theme={isLightMode ? "light" : "dark"}
+        />
+
     </Box>
   );
 
