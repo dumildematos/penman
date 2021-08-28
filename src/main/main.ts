@@ -11,12 +11,12 @@
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import path from 'path';
-import { app, BrowserWindow, shell, ipcMain } from 'electron';
+import { app, BrowserWindow, shell, ipcMain, dialog } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
-
+import fs from 'fs';
 export default class AppUpdater {
   constructor() {
     log.transports.file.level = 'info';
@@ -31,6 +31,29 @@ ipcMain.on('ipc-example', async (event, arg) => {
   const msgTemplate = (pingPong: string) => `IPC test: ${pingPong}`;
   console.log(msgTemplate(arg));
   event.reply('ipc-example', msgTemplate('pong'));
+});
+
+ipcMain.on('save-dialog', (event, arg) => {
+  const options = {
+    title: 'Save File',
+    filters: [{ name: 'readme', extensions: ['md'] }],
+  };
+  dialog
+    .showSaveDialog(mainWindow, options)
+    // eslint-disable-next-line promise/always-return
+    .then((filename) => {
+      console.log(filename);
+      // eslint-disable-next-line promise/always-return
+      if (fs.existsSync(filename.filePath)) {
+        dialog.showErrorBox('An Error Message', 'File already exists.')
+      } else {
+        fs.writeFile(filename.filePath, arg, 'utf8', () => {});
+      }
+      event.sender.send('saved-file', filename);
+    })
+    .catch((err) => {
+      console.error({ error: err });
+    });
 });
 
 if (process.env.NODE_ENV === 'production') {

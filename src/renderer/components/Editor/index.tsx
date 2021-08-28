@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import MDEditor from "@uiw/react-md-editor";
 import styled from '@xstyled/styled-components';
 import Yamde from "yamde";
@@ -30,6 +30,7 @@ export default function App() {
 \`\`\`
 `;
 import MarkdownPreview from '@uiw/react-markdown-preview';
+import { MainContext } from '../../context/AppContext';
 const Box = styled.divBox`
   width:100%;
   height: 100%;
@@ -51,7 +52,7 @@ const Box = styled.divBox`
 
 export default function Editor() {
 
-  const [value, setValue] = useState(mkdStr);
+  const { createNew, saveEditorContent , editorContent }  = useContext(MainContext)
 
   const [isLightMode, setIsLightMode] = useState(true);
   const [text, setText] = useState(exampleContent);
@@ -65,8 +66,8 @@ export default function Editor() {
     // </Box>
     <Box>
       <Yamde
-          value={text}
-          handler={setText}
+          value={editorContent}
+          handler={saveEditorContent}
           theme={isLightMode ? "light" : "dark"}
         />
 
