@@ -25,7 +25,7 @@ export default function App() {
   return (
     <>
      <MainContextProvider>
-      <NavMenu />
+      <NavMenu/>
       <Router>
         <Switch>
           <Route path="/" component={TextEditor} />

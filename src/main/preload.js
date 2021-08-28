@@ -22,5 +22,8 @@ contextBridge.exposeInMainWorld('electron', {
     saveFile(data) {
       ipcRenderer.send('save-dialog', data);
     },
+    goToURL(url) {
+      ipcRenderer.send('go-to-url', url);
+    },
   },
 });

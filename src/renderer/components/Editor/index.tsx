@@ -1,36 +1,10 @@
 /* eslint-disable prettier/prettier */
-import React, { useContext, useState } from 'react';
-import MDEditor from "@uiw/react-md-editor";
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import styled from '@xstyled/styled-components';
 import Yamde from "yamde";
 import { exampleContent } from './exampleContent';
-const mkdStr = `# Markdown Editor for [React](https://facebook.github.io/react/)
-
-**Hello world!!!**
-
-[![](https://avatars.githubusercontent.com/u/1680273?s=80&v=4)](https://avatars.githubusercontent.com/u/1680273?v=4)
-
-\`\`\`javascript
-import React from "react";
-import ReactDOM from "react-dom";
-import MEDitor from '@uiw/react-md-editor';
-
-export default function App() {
-  const [value, setValue] = React.useState("**Hello world!!!**");
-  return (
-    <div className="container">
-      <MEDitor
-        value={value}
-        onChange={setValue}
-      />
-      <MDEditor.Markdown source={value} />
-    </div>
-  );
-}
-\`\`\`
-`;
-import MarkdownPreview from '@uiw/react-markdown-preview';
 import { MainContext } from '../../context/AppContext';
+
 const Box = styled.divBox`
   width:100%;
   height: 100%;
@@ -49,7 +23,6 @@ const Box = styled.divBox`
 
 
 `;
-
 export default function Editor() {
 
   const { createNew, saveEditorContent , editorContent }  = useContext(MainContext)
@@ -57,13 +30,57 @@ export default function Editor() {
   const [isLightMode, setIsLightMode] = useState(true);
   const [text, setText] = useState(exampleContent);
 
+ const anchorRef = useRef<HTMLAnchorElement>(null);
+
+ const clickPreview = (callback) => {
+  document.getElementsByClassName('viewSwitch-0-2-5')[0].children[1].addEventListener('click', (e)=>{
+    if(callback){
+      callback();
+    }
+  })
+ }
+
+ // eslint-disable-next-line no-restricted-globals
+
+
+
+  useEffect(() => {
+
+    clickPreview(() => {
+      clickPreview(()=>{
+        console.log('clicou no link')
+        const anchour: any = document.getElementsByTagName('a')
+        let links = anchour;
+
+        links.forEach(function(link){
+          anchorRef.current = link;
+          link.onclick = ()=> {
+            let url = link.href;
+            link.href = "#!";
+            if(link.href !== '#!' || url === '#!'){
+              document.getElementsByClassName('viewSwitch-0-2-5')[0].children[1].click()
+            }
+            else {
+              window.electron.ipcRenderer.goToURL(url)
+            }
+          };
+
+        })
+      })
+    })
+
+  })
+
+
+
+  setTimeout(() => {
+    if(!anchorRef.current)
+      document.getElementsByClassName('viewSwitch-0-2-5')[0].children[1].click()
+      document.getElementsByClassName('viewSwitch-0-2-5')[0].children[1].click()
+  }, 2000)
 
   return (
-    // <Box>
-    //   <div className="container">
-    //     <MDEditor height={200} value={value} onChange={setValue} />
-    //   </div>
-    // </Box>
+
     <Box>
       <Yamde
           value={editorContent}

@@ -14,9 +14,9 @@ import path from 'path';
 import { app, BrowserWindow, shell, ipcMain, dialog } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
+import fs from 'fs';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
-import fs from 'fs';
 export default class AppUpdater {
   constructor() {
     log.transports.file.level = 'info';
@@ -42,18 +42,20 @@ ipcMain.on('save-dialog', (event, arg) => {
     .showSaveDialog(mainWindow, options)
     // eslint-disable-next-line promise/always-return
     .then((filename) => {
-      console.log(filename);
+      // console.log(filename);
       // eslint-disable-next-line promise/always-return
-      if (fs.existsSync(filename.filePath)) {
-        dialog.showErrorBox('An Error Message', 'File already exists.')
-      } else {
-        fs.writeFile(filename.filePath, arg, 'utf8', () => {});
-      }
+
+      fs.writeFile(filename.filePath, arg, 'utf8', () => {});
+
       event.sender.send('saved-file', filename);
     })
     .catch((err) => {
       console.error({ error: err });
     });
+});
+
+ipcMain.on('go-to-url', (event, url) => {
+  shell.openExternal(url);
 });
 
 if (process.env.NODE_ENV === 'production') {
