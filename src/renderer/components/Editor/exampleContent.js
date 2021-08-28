@@ -1,4 +1,12 @@
-export const exampleContent = `**This** is an *example* ~~text~~.
+export const exampleContent = `
+#Penman
+
+## Hey there! Stop having problems with markdown texts, Penman 🤖 comes to help you with that 🚀🚀🚀.
+
+###Penman is a markdown text editor that allows you to write and generate your "README.md" file in a very easy and effortless way.
+
+**You can use all the most used markdown formats**, and more, just by clicking, below is an example:
+**This** is an *example* ~~text~~.
 
 # Header 1
 ## Header 2

@@ -46,38 +46,38 @@ export default function Editor() {
 
   useEffect(() => {
 
-    clickPreview(() => {
-      clickPreview(()=>{
-        console.log('clicou no link')
-        const anchour: any = document.getElementsByTagName('a')
-        let links = anchour;
+    // clickPreview(() => {
+    //   clickPreview(()=>{
+    //     console.log('clicou no link')
+    //     const anchour: any = document.getElementsByTagName('a')
+    //     let links = anchour;
 
-        links.forEach(function(link){
-          anchorRef.current = link;
-          link.onclick = ()=> {
-            let url = link.href;
-            link.href = "#!";
-            if(link.href !== '#!' || url === '#!'){
-              document.getElementsByClassName('viewSwitch-0-2-5')[0].children[1].click()
-            }
-            else {
-              window.electron.ipcRenderer.goToURL(url)
-            }
-          };
+    //     links.forEach(function(link){
+    //       anchorRef.current = link;
+    //       link.onclick = ()=> {
+    //         let url = link.href;
+    //         link.href = "#!";
+    //         if(link.href !== '#!' || url === '#!'){
+    //           document.getElementsByClassName('viewSwitch-0-2-5')[0].children[1].click()
+    //         }
+    //         else {
+    //           window.electron.ipcRenderer.goToURL(url)
+    //         }
+    //       };
 
-        })
-      })
-    })
+    //     })
+    //   })
+    // })
 
   })
 
 
 
-  setTimeout(() => {
-    if(!anchorRef.current)
-      document.getElementsByClassName('viewSwitch-0-2-5')[0].children[1].click()
-      document.getElementsByClassName('viewSwitch-0-2-5')[0].children[1].click()
-  }, 2000)
+  // setTimeout(() => {
+  //   if(!anchorRef.current)
+  //     document.getElementsByClassName('viewSwitch-0-2-5')[0].children[1].click()
+  //     document.getElementsByClassName('viewSwitch-0-2-5')[0].children[1].click()
+  // }, 2000)
 
   return (
 
