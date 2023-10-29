@@ -61,7 +61,7 @@ git push origin feature-name
 
 <img src=".erb/img/penman-editor.png" width="100%" />
 
-## previw
+## preview
 
 <img src=".erb/img/penman-preview.png" width="100%" />
 
