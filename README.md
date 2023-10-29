@@ -66,7 +66,7 @@ git push origin feature-name
 <img src=".erb/img/penman-preview.png" width="100%" />
 
 ## License
-This project is licensed under the MIT License - see the [LICENSE](https://github.com/dumildematos/penman/blob/main/LICENSE) file for details.
+This project is licensed under the MIT License - see the [LICENSE](https://github.com/dumildematos/penman/blob/master/LICENSE) file for details.
 
 ## Acknowledgments
 Penman was created by Dumilde Matos using the [Electron React Boilerplate](https://electron-react-boilerplate.js.org). Special thanks to the open-source community for their valuable contributions.
